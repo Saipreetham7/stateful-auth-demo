@@ -29,14 +29,16 @@ async function userLogin(req, res) {
       .status(404)
       .json({ error: 'Invalid credentials, User not found!' });
   }
-  const sessionId = uuidv4();
-  setUser(sessionId, user);
-  res.cookie('uid', sessionId);
+  //   const sessionId = uuidv4();
+  const token = setUser(user);
+  //   setUser(sessionId, user);
+  res.cookie('token', token);
   return res.status(200).json({
     message: 'user loggedin in successfully',
     id: user._id,
     email: user.email,
     name: user.name,
+    token: token,
   });
 }
 
